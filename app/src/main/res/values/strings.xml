@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BODHConverter</string>
+    <string name="binary">Bin</string>
+    <string name="Oct">Oct</string>
+    <string name="Decimal">Dec</string>
+    <string name="Hexdec">Hex</string>
+</resources>
