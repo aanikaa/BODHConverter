@@ -1,14 +1,24 @@
 package com.example.calineczka.bodhconverter;
 
-import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Toast;
 
 
-class HexTextWatcher extends MyTextWatcher {
-    private Context context;
+class HexTextWatcher implements TextWatcher {
+    private ITextWatcher watcher;
+    private String binaryString;
+    private String hexString;
+    private String octalString;
+    private String decimalString;
+    private int hexNumberInDec;
 
-    HexTextWatcher(Context context) {
-        this.context = context;
+    HexTextWatcher(ITextWatcher watcher) {
+        this.watcher = watcher;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
     }
 
     @Override
@@ -16,28 +26,37 @@ class HexTextWatcher extends MyTextWatcher {
         if(!isInputEmpty(s)) {
             hexString = s.toString();
             convertHex(hexString);
+            decimalString = String.valueOf(hexNumberInDec);
 
-            decTextView.setText(String.valueOf(hexNumberInDec));
-            octTextView.setText(octalString);
-            binTextView.setText(binaryString);
         }
         else {
-            decTextView.setText("");
-            binTextView.setText("");
-            octTextView.setText("");
+            decimalString = "";
+            binaryString = "";
+            octalString = "";
         }
+        watcher.updateBinaryValue(binaryString);
+        watcher.updateOctalValue(octalString);
+        watcher.updateDecimalValue(decimalString);
+
+    }
+    public void afterTextChanged(Editable editable) {
+    }
+
+    private boolean isInputEmpty(CharSequence s) {
+        return s.toString().length()==0;
     }
 
 
-private void convertHex(String hexString){
+    private void convertHex(String hexString){
         try {
-        hexNumberInDec = Integer.parseInt(hexString,16);
-        binaryString = Integer.toBinaryString(hexNumberInDec);
-        octalString = Integer.toOctalString(hexNumberInDec);
-        } catch (NumberFormatException e) {
-        e.printStackTrace();
-        Toast.makeText(context, "Invalid input", Toast.LENGTH_SHORT).show();
+            hexNumberInDec = Integer.parseInt(hexString,16);
+            binaryString = Integer.toBinaryString(hexNumberInDec);
+            octalString = Integer.toOctalString(hexNumberInDec);
+        }
+        catch (NumberFormatException e) {
+            e.printStackTrace();
+            watcher.showErrorToast();
         }
 
-        }
+    }
 }
