@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnEditorAction;
+import butterknife.OnFocusChange;
 
 
 public class MainActivity extends AppCompatActivity implements ITextWatcher {
@@ -33,6 +35,22 @@ public class MainActivity extends AppCompatActivity implements ITextWatcher {
         hexEditText.addTextChangedListener(new HexTextWatcher(this));
     }
 
+    @OnFocusChange(R.id.BinEditText)
+    void clearBinValue(){
+        binTextView.setText("");
+    }
+    @OnFocusChange(R.id.OctEditText)
+    void clearOctValue(){
+        octTextView.setText("");
+    }
+    @OnFocusChange(R.id.DecEditText)
+    void clearDecValue(){
+        decTextView.setText("");
+    }
+    @OnFocusChange(R.id.HexEditText)
+    void clearHexValue(){
+        hexTextView.setText("");
+    }
 
     @Override
     public void updateBinaryValue(String binaryString) {
