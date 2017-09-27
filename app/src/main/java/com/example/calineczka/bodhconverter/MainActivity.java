@@ -38,18 +38,30 @@ public class MainActivity extends AppCompatActivity implements ITextWatcher {
     @OnFocusChange(R.id.BinEditText)
     void clearBinValue(){
         binTextView.setText("");
+        clearAllPreviousInputs();
     }
+
+    private void clearAllPreviousInputs() {
+        binEditText.setText("");
+        octEditText.setText("");
+        decEditText.setText("");
+        hexEditText.setText("");
+    }
+
     @OnFocusChange(R.id.OctEditText)
     void clearOctValue(){
         octTextView.setText("");
+        clearAllPreviousInputs();
     }
     @OnFocusChange(R.id.DecEditText)
     void clearDecValue(){
         decTextView.setText("");
+        clearAllPreviousInputs();
     }
     @OnFocusChange(R.id.HexEditText)
     void clearHexValue(){
         hexTextView.setText("");
+        clearAllPreviousInputs();
     }
 
     @Override
