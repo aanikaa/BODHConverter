@@ -1,14 +1,13 @@
 package com.example.calineczka.bodhconverter;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnEditorAction;
 import butterknife.OnFocusChange;
 
 
@@ -53,11 +52,13 @@ public class MainActivity extends AppCompatActivity implements ITextWatcher {
         octTextView.setText("");
         clearAllPreviousInputs();
     }
+
     @OnFocusChange(R.id.DecEditText)
     void clearDecValue(){
         decTextView.setText("");
         clearAllPreviousInputs();
     }
+
     @OnFocusChange(R.id.HexEditText)
     void clearHexValue(){
         hexTextView.setText("");
@@ -88,5 +89,4 @@ public class MainActivity extends AppCompatActivity implements ITextWatcher {
     public void showErrorToast() {
         Toast.makeText(this, "Invalid input", Toast.LENGTH_SHORT).show();
     }
-
 }

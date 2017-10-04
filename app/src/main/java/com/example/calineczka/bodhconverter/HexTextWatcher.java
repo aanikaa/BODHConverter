@@ -2,16 +2,13 @@ package com.example.calineczka.bodhconverter;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.Toast;
 
 
 class HexTextWatcher implements TextWatcher {
     private ITextWatcher watcher;
     private String binaryString;
-    private String hexString;
     private String octalString;
     private String decimalString;
-    private int hexNumberInDec;
 
     HexTextWatcher(ITextWatcher watcher) {
         this.watcher = watcher;
@@ -23,37 +20,34 @@ class HexTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if(!isInputEmpty(s)) {
-            hexString = s.toString();
+        if (!isInputEmpty(s)) {
+            String hexString = s.toString();
             convertHex(hexString);
-            decimalString = String.valueOf(hexNumberInDec);
-
-        }
-        else {
+        } else {
             decimalString = "";
             binaryString = "";
             octalString = "";
         }
+    }
+
+    public void afterTextChanged(Editable editable) {
         watcher.updateBinaryValue(binaryString);
         watcher.updateOctalValue(octalString);
         watcher.updateDecimalValue(decimalString);
-
-    }
-    public void afterTextChanged(Editable editable) {
     }
 
     private boolean isInputEmpty(CharSequence s) {
-        return s.toString().length()==0;
+        return s.toString().length() == 0;
     }
 
 
-    private void convertHex(String hexString){
+    private void convertHex(String hexString) {
         try {
-            hexNumberInDec = Integer.parseInt(hexString,16);
+            int hexNumberInDec = Integer.parseInt(hexString, 16);
             binaryString = Integer.toBinaryString(hexNumberInDec);
             octalString = Integer.toOctalString(hexNumberInDec);
-        }
-        catch (NumberFormatException e) {
+            decimalString = String.valueOf(hexNumberInDec);
+        } catch (NumberFormatException e) {
             e.printStackTrace();
             watcher.showErrorToast();
         }

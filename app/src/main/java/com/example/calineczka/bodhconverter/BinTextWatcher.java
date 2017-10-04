@@ -1,17 +1,13 @@
 package com.example.calineczka.bodhconverter;
 
-import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.Toast;
 
 
 class BinTextWatcher implements TextWatcher {
 
     private ITextWatcher watcher;
-    private String binaryString;
     private String decimalString;
-    private int binaryNumberInDec;
     private String octalString;
     private String hexString;
 
@@ -26,20 +22,15 @@ class BinTextWatcher implements TextWatcher {
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (!isInputEmpty(s)) {
-            binaryString = s.toString();
+        String input = s.toString();
+        if (!isInputEmpty(input)) {
+            String binaryString = s.toString();
             convertBinary(binaryString);
-            decimalString = String.valueOf(binaryNumberInDec);
         } else {
-            decimalString = "";
             octalString = "";
+            decimalString = "";
             hexString = "";
         }
-        watcher.updateOctalValue(octalString);
-        watcher.updateDecimalValue(decimalString);
-        watcher.updateHexValue(hexString);
-
-
     }
 
     private boolean isInputEmpty(CharSequence s) {
@@ -48,14 +39,17 @@ class BinTextWatcher implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable editable) {
-
+        watcher.updateOctalValue(octalString);
+        watcher.updateDecimalValue(decimalString);
+        watcher.updateHexValue(hexString);
     }
 
     private void convertBinary(String binaryString) {
         try {
-            binaryNumberInDec = Integer.parseInt(binaryString, 2);
+            int binaryNumberInDec = Integer.parseInt(binaryString, 2);
             octalString = Integer.toOctalString(binaryNumberInDec);
             hexString = Integer.toHexString(binaryNumberInDec);
+            decimalString = String.valueOf(binaryNumberInDec);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             watcher.showErrorToast();
